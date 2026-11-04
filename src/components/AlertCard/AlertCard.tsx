@@ -46,7 +46,7 @@ export function AlertCard({ alert, onDelete }: AlertCardProps) {
           onPress={handleDelete}
           style={alertCardStyles.deleteBtn}
           accessibilityRole="button"
-          accessibilityLabel="Delete alert"
+          accessibilityLabel={`Delete alert ${alert.cryptocurrency} ${alert.targetPrice}`}
         >
           <Ionicons name="trash-outline" size={20} color={colors.iconMuted} />
         </Pressable>

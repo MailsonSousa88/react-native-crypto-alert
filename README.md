@@ -1,56 +1,46 @@
-# Welcome to your Expo app 👋
+# Crypto Alert — testes E2E no Expo Web
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Aplicativo React Native com Expo Router. A suíte em `.maestro/` cobre conversão de criptomoedas, criação e exclusão de alertas e validação do formulário de alerta.
 
-## Get started
+## Preparação
 
-1. Install dependencies
+É necessário Node.js, npm, Java 17 ou superior e a CLI do Maestro. No Windows, baixe o `maestro.zip` na [página de versões do Maestro](https://github.com/mobile-dev-inc/Maestro/releases), extraia para um diretório estável e adicione a pasta `maestro/bin` ao `PATH`. Confira a instalação:
 
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```powershell
+java -version
+maestro --version
+npm ci
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Executar o aplicativo e os testes
 
-### Other setup steps
+Em um terminal, na raiz do projeto:
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+```powershell
+npx expo start --web --port 8081
+```
 
-## Learn more
+Confirme que o Expo informa `http://localhost:8081` e que a página abre no navegador. Em outro terminal:
 
-To learn more about developing your project with Expo, look at the following resources:
+```powershell
+maestro test .maestro/
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Os quatro arquivos YAML usam `url: http://localhost:8081`. Caso o Expo escolha outra porta, atualize essa URL nos fluxos antes da execução. O Maestro Web abre sua própria instância de Chromium. As capturas produzidas pelos fluxos ficam no diretório de saída do Maestro.
 
-## Join the community
+Cada fluxo abre a aplicação e prepara suas próprias interações. O fluxo de exclusão cria seu alerta com preço gerado na própria execução e o remove pelo rótulo específico do botão. Como `clearState` não é oferecido pelo Maestro Web, a suíte não pressupõe uma lista de alertas vazia.
 
-Join our community of developers creating universal apps.
+## Evidências
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+As capturas abaixo foram geradas por `takeScreenshot` durante a execução real no Chromium:
+
+- [Conversão válida](evidencias/conversion-valid.png)
+- [Alerta criado](evidencias/alert-created.png)
+
+Validação em 04/11/2026: `maestro test .maestro/` concluiu com **4/4 fluxos aprovados** no Expo Web em `http://localhost:8081`. `npx tsc --noEmit` também concluiu sem erros.
+
+## Escopo da validação
+
+Esta suíte valida a versão **Expo Web no Chromium**. A execução Web não substitui a validação nativa que o enunciado acadêmico original solicita. Uma eventual validação em Android ou iOS deve ser registrada separadamente pelo estudante.
+
+O planejamento assistido por IA está em [ia/planejamento.md](ia/planejamento.md). A reflexão acadêmica em `reflexao.md` é de responsabilidade exclusiva do estudante.

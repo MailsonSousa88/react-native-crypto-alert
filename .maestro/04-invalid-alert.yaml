@@ -1,0 +1,24 @@
+url: http://localhost:8081
+name: Formulario de alerta invalido
+---
+- launchApp
+- tapOn: Alerts
+- tapOn: New Alert
+- assertVisible: Create Alert
+- assertVisible: Save Alert
+- tapOn: Save Alert
+- assertVisible: Create Alert
+- tapOn:
+    id: alert-cryptocurrency
+- tapOn:
+    point: '50%, 42%'
+- assertVisible: 'Bitcoin \(BTC\)'
+- tapOn:
+    id: alert-target-price
+- inputText: '0'
+- assertVisible: Save Alert
+- tapOn: Save Alert
+- assertVisible: Create Alert
+- tapOn: Alerts
+- assertVisible: Price Alerts
+- assertNotVisible: '.*\$0\.00.*'

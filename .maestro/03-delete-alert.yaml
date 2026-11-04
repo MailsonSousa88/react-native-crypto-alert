@@ -1,0 +1,25 @@
+url: http://localhost:8081
+name: Exclusao de alerta proprio
+---
+- launchApp
+- evalScript: ${output.price = String(Math.floor(100000 + Math.random() * 900000))}
+- tapOn: Alerts
+- tapOn: New Alert
+- assertVisible: Create Alert
+- tapOn:
+    id: alert-cryptocurrency
+- tapOn:
+    point: '50%, 42%'
+- assertVisible: 'Bitcoin \(BTC\)'
+- tapOn:
+    id: alert-target-price
+- inputText: ${output.price}
+- tapOn: Above target price
+- tapOn: Save Alert
+- assertVisible:
+    id: ${'Delete alert Bitcoin ' + output.price}
+- tapOn:
+    id: ${'Delete alert Bitcoin ' + output.price}
+- assertNotVisible:
+    id: ${'Delete alert Bitcoin ' + output.price}
+- takeScreenshot: alert-deleted

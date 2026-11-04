@@ -1,0 +1,22 @@
+url: http://localhost:8081
+name: Criacao de alerta Bitcoin
+---
+- launchApp
+- tapOn: Alerts
+- assertVisible: Price Alerts
+- tapOn: New Alert
+- assertVisible: Create Alert
+- tapOn:
+    id: alert-cryptocurrency
+- tapOn:
+    point: '50%, 42%'
+- assertVisible: 'Bitcoin \(BTC\)'
+- tapOn:
+    id: alert-target-price
+- inputText: '70000'
+- tapOn: Above target price
+- assertVisible: Save Alert
+- tapOn: Save Alert
+- assertVisible: Price Alerts
+- assertVisible: '.*70,000\.00.*'
+- takeScreenshot: alert-created
